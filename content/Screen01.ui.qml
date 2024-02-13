@@ -16,6 +16,48 @@ Rectangle {
 
     color: Constants.backgroundColor
 
+    Rectangle {
+        id: header
+        height: 100
+        color: Constants.backgroundColor
+        border.width: 2
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        Label {
+            id: txtServerStatus
+            text: qsTr("Logitech Media Server Status: ")
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            font.pointSize: 24
+        }
+
+        Rectangle {
+            id: btnMainMenu
+            width: parent.height
+            color: "#00ffffff"
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+
+            Label {
+                id: lblMainMenu
+                text: "\u2630"
+                anchors.verticalCenter: parent.verticalCenter
+                font.pointSize: 24
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            MouseArea {
+                id: mainMenuMouseArea
+                anchors.fill: parent
+            }
+        }
+    }
+
+
     Button {
         id: button
         text: qsTr("Press me")
