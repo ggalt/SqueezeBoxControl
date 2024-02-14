@@ -11,8 +11,11 @@ import SqueezeBoxControl
 
 Rectangle {
     id: rectangle
-    width: Constants.width
-    height: Constants.height
+    // width: Constants.width
+    // height: Constants.height
+    width: 1080
+    height: 1920
+
 
     color: Constants.backgroundColor
 
@@ -57,57 +60,68 @@ Rectangle {
         }
     }
 
+    StackView {
+        id: stackView
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: header.bottom
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 0
 
-    Button {
-        id: button
-        text: qsTr("Press me")
-        anchors.verticalCenter: parent.verticalCenter
-        checkable: true
-        anchors.horizontalCenter: parent.horizontalCenter
+        Page {
+            id: clientPage
+            anchors.fill: parent
 
-        Connections {
-            target: button
-            onClicked: animation.start()
+            ListView {
+                id: listView
+                anchors.fill: parent
+                model: ListModel {
+                    ListElement {
+                        name: "Grey"
+                        colorCode: "grey"
+                    }
+
+                    ListElement {
+                        name: "Red"
+                        colorCode: "red"
+                    }
+
+                    ListElement {
+                        name: "Blue"
+                        colorCode: "blue"
+                    }
+
+                    ListElement {
+                        name: "Green"
+                        colorCode: "green"
+                    }
+                }
+                delegate: Item {
+                    x: 5
+                    width: 80
+                    height: 40
+                    Row {
+                        id: row1
+                        spacing: 10
+                        Rectangle {
+                            width: 40
+                            height: 40
+                            color: colorCode
+                        }
+
+                        Text {
+                            text: name
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.bold: true
+                        }
+                    }
+                }
+
+                ClientItemDelegate {
+                    id: itemDelegate
+                }
+            }
         }
     }
 
-    Text {
-        id: label
-        text: qsTr("Hello SqueezeBoxControl")
-        anchors.top: button.bottom
-        font.family: Constants.font.family
-        anchors.topMargin: 45
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        SequentialAnimation {
-            id: animation
-
-            ColorAnimation {
-                id: colorAnimation1
-                target: rectangle
-                property: "color"
-                to: "#2294c6"
-                from: Constants.backgroundColor
-            }
-
-            ColorAnimation {
-                id: colorAnimation2
-                target: rectangle
-                property: "color"
-                to: Constants.backgroundColor
-                from: "#2294c6"
-            }
-        }
-    }
-    states: [
-        State {
-            name: "clicked"
-            when: button.checked
-
-            PropertyChanges {
-                target: label
-                text: qsTr("Button Checked")
-            }
-        }
-    ]
 }
